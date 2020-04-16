@@ -4,7 +4,26 @@
 	word-wrap: break-word;
 }
 
-font-color:black;
+body{font-color:black;}
+
+.sms-success{
+	padding:2em;
+	background-color:green;
+	border-radius:15px;
+}
+
+.sms-fail{
+	padding:2em;
+	background-color:red;
+	border-radius:15px;
+}
+
+.left-chars{margin-top:1em; font-size:0.8em;}
+
+
+#checkQuota img{
+	width:8em;
+}
 
 #myFormZ{
 	margin:4%;
@@ -358,7 +377,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b1dbed', end
  /*  Language Selection at top right */
 .language {
 	position: absolute;
-	right: 1em;
+	right: 7em;
 	top:0.2em;
 	cursor:pointer;
 }

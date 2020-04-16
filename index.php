@@ -90,7 +90,8 @@
                    </form>				   
                    <!---------END Form -------->				   
 				   
-				   <p id="leftSmsCharsLimit"></p>
+				   <!------- How many chars left  -------->
+				   <p id="leftSmsCharsLimit" class="left-chars"></p>
 				   
 				 </div> <!--END <div class="col-sm-4" style="background-color:lavender;">-->
 				
@@ -146,10 +147,14 @@
 		
 		      //echo $messageAnswer;
 		      if($messageAnswer['success']){
-				  $status = '<p class="bg-success">Sms was sent successfully.</p>';
+				  $status = '<p class="sms-success">Sms was sent successfully.</p>';
+				  $status = $status . 
+				      '<button id="checSmsDeliveryStatus" class="btn" data-sms="'. $messageAnswer['textId'] .'">Check sms status.</button>' . //button to check send delivery of sent sms
+					  '<p id="deliveyStatus"></p>';  //  <p> to show result
+					  
 				  $status = $status . " " . $messageAnswer['success'];
 		    } else {
-			      $status = '<p class="bg-warning">Sms not sent.</p>';
+			      $status = '<p class="sms-fail">Sms not sent.</p>';
 		    }
 		
 	        if(isset($messageAnswer['error'])){
@@ -167,7 +172,23 @@
 				 
 				 
 				 
-				 
+		// Check if cUrl is installed
+        function _is_curl_installed() {
+            if  (in_array  ('curl', get_loaded_extensions())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+		
+		
+		if(!_is_curl_installed()){
+			echo '<p class="sms-fail"> cUrl is not installed </p>';
+		} else {
+			echo '<p class="sms-success"> cUrl is installed </p>';
+		}
+
+		 
 				 
 				 if (isset($_POST['phone_number']) && isset($_POST['sms_text'])){
 					 echo "Phone is " . $_POST['phone_number'];
@@ -196,8 +217,11 @@
 				 <br><br><br><br><br>
 				 
 				 
-				 
-				 
+				 <div class="col-sm-12 col-xs-12">
+				      <h2>Frame</h2>
+                      <iframe src="http://dimmm931.000webhostapp.com/sms/" width="99%" height="900px"></iframe>
+                 </div>
+
                                     
      
     			</div><!-- /.container -->	
@@ -226,6 +250,12 @@
 		<!-----------------  Button to change Style theme------------------------->
 	   <input type="button" class="btn btn-sm" value=">>" id="changeStyle" style="position:absolute;top:0px;left:0px;" title="click to change theme"/>
 	   <!-----------------  Button to change Style theme------------------------->
+		
+		
+		<!-----------------  Button to check quota ------------------------->
+	   <button type="button" class="btn btn-sm" id="checkQuota" style="position:absolute;top:0px;right:0px;cursor:pointer; color:black;" title="check quota">Quota</button>
+	   <!-----------------  End Button to check quota------------------------->
+		
 		
 		
 	
