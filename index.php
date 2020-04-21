@@ -73,12 +73,12 @@
 						  
 						  <div class="form-group">
                               <label for="usr">Phone number:</label>
-                              <input type="text" class="form-control" id="cellID" name="phone_number" placeholder="Phone number" value="+380976641342">
+                              <input type="text" class="form-control" id="cellID" name="phone_number" placeholder="Phone number" value="+38097">
                           </div>
 						  
 						  <div class="form-group">
                               <label for="usr">Sms text:</label>
-                              <textarea rows="4" class="form-control" cols="50" name="sms_text" id="smsText" >Enter text here...</textarea>
+                              <textarea rows="4" class="form-control" cols="50" name="sms_text" id="smsText" placeholder="your sms here..."><?php if( isset($_POST['sms_text']) && !isset($messageAnswer['success'])){echo $_POST['sms_text']; }?></textarea>
                           </div>
                           
 						  
@@ -101,99 +101,39 @@
 				 
 				 
 				 
-				 <!--------------------------- START Error window---------------------------->
+				 <!--------------------------- START Error window (Not used???)---------------------------->
 				<div class="row">
-				<div class="col-sm-6 col-xs-12" id="qrResult"> <!-- width:100% caused none-one line position in web view, normal in mobile--> 
-				</div> <!-- END <div class="col-sm-4 col-xs-12" id="qrResult">-->
+				   <div class="col-sm-6 col-xs-12" id="qrResult"> <!-- width:100% caused none-one line position in web view, normal in mobile--> 
+				   </div> <!-- END <div class="col-sm-4 col-xs-12" id="qrResult">-->
 				</div>
                 <!------------------------- END Error window------------------------------>
 				 
 				 
 				 
-				 <br><br><br><br><br>
+				 <br><br><!--<br><br><br>-->
 				 
 				 
 			<?php
+			//autoload
+			include 'Classes/autoload.php';//uses autoload instead of manual includin each class-> Error if it is included in 2 files=only1 is accepted 
+			include 'Credentials/credentials.php';
 				 
-			function runSmsCurl(){
 		
-		        $ch = curl_init('https://textbelt.com/text');
-                $data = array(
-                    'phone' =>   $_POST['phone_number'], //'+380976641342',
-                    'message' => $_POST['sms_text'], //'Hello. Eng version. Русская версия',
-                    'key' => 'textbelt',
-                 );
-
-               curl_setopt($ch, CURLOPT_POST, 1);
-               curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-               $response = curl_exec($ch);
-		       $err = curl_error($ch);
-               curl_close($ch);
-		
-	          
-	          //info if any curl error happened
-		      if ($err) {
-                  //echo "cURL Error #:" . $err;
-			      $errorX = $err; //'<p class="bg-warning">Sms not sent.</p>' . $err;
-              } else {
-                  //echo "<p> FEATURE STATUS=></p><p>Below is response from API-></p>";
-                  //echo $response;
-		          $errorX = "No error detected";
-              }
-		
-		      $messageAnswer = json_decode($response, TRUE); //gets the cUrl response and decode to normal array
-		
-		      //echo $messageAnswer;
-		      if($messageAnswer['success']){
-				  $status = '<p class="sms-success">Sms was sent successfully.</p>';
-				  $status = $status . 
-				      '<button id="checSmsDeliveryStatus" class="btn" data-sms="'. $messageAnswer['textId'] .'">Check sms status.</button>' . //button to check send delivery of sent sms
-					  '<p id="deliveyStatus"></p>';  //  <p> to show result
-					  
-				  $status = $status . " " . $messageAnswer['success'];
-		    } else {
-			      $status = '<p class="sms-fail">Sms not sent.</p>';
-		    }
-		
-	        if(isset($messageAnswer['error'])){
-	            $errMsg = $messageAnswer['error']; //gets the array element "message", it exists only if UUID is unique, i.e "message":"Feature does not exist", if Feature exists, 'message' does not exist
-	        } else {
-			    $errMsg = "No errors";
-		    }
-        
-		    //convert array to string
-		    $allMsg = str_replace('=', ':', http_build_query($messageAnswer, null, ','));
-		
-		    $text = $status . " Error: " .  $errMsg . " Err: " . $errorX ." Response=> " . $allMsg;
-			return $text;
-        }
 				 
 				 
-				 
-		// Check if cUrl is installed
-        function _is_curl_installed() {
-            if  (in_array  ('curl', get_loaded_extensions())) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-		
-		
-		if(!_is_curl_installed()){
-			echo '<p class="sms-fail"> cUrl is not installed </p>';
-		} else {
-			echo '<p class="sms-success"> cUrl is installed </p>';
-		}
+			//Check if cUrl is installed	 
+		    $checkCurl = new MySmsTetxBelt\Check_Is_Curl_Installed();
+		    $checkCurl->_is_curl_installed();
+			
 
 		 
-				 
+				 //Sending SMS
 				 if (isset($_POST['phone_number']) && isset($_POST['sms_text'])){
 					 echo "Phone is " . $_POST['phone_number'];
 					 echo "<br>Sms is " . $_POST['sms_text'];
-					 $text = runSmsCurl();
+					 
+					 $sms = new MySmsTetxBelt\SendSms();
+	                 $text = $sms->sendingSms($_POST['phone_number'], $_POST['sms_text']);
 				 } else {
 					 $text = "<h2>Waiting for your sms</h2>";
 				 }
@@ -234,8 +174,7 @@
 		
 		
 		
-		  <!-----Footer ---->
-		        
+		<!-----Footer ---->
 				<div class="footer "> <!--navbar-fixed-bottom  fixxes bootom problem-->
 				    <!--Contact: --> <strong>dimmm931@gmail.com</strong><br>
 					<?php  echo date("Y"); ?>
@@ -253,7 +192,12 @@
 		
 		
 		<!-----------------  Button to check quota ------------------------->
-	   <button type="button" class="btn btn-sm" id="checkQuota" style="position:absolute;top:0px;right:0px;cursor:pointer; color:black;" title="check quota">Quota</button>
+	   <button type="button" class="btn btn-sm" id="checkQuota" style="position:absolute;top:0px;right:0px;cursor:pointer; color:black;" title="check quota">
+	   <?php
+	   //$check = new MySmsTetxBelt\CheckQuota();
+	   //$check->checkTodayQuota();
+	   ?>
+	   </button>
 	   <!-----------------  End Button to check quota------------------------->
 		
 		

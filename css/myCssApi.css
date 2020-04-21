@@ -6,24 +6,50 @@
 
 body{font-color:black;}
 
+/* flash message if Sms is sent */
 .sms-success{
 	padding:2em;
 	background-color:green;
 	border-radius:15px;
+	border: 1px solid white;
 }
 
+/* flash message if Sms sending failed */
 .sms-fail{
 	padding:2em;
 	background-color:red;
 	border-radius:15px;
+	border: 1px solid white;
 }
 
+/* show amount of chars left (on typing) */
 .left-chars{margin-top:1em; font-size:0.8em;}
 
 
 #checkQuota img{
 	width:8em;
 }
+
+/* button to click in order to acquire status */
+.check-sms-delivery{color:black;}
+
+/* div that shows ajax result for Delivery */
+#deliveyStatus{
+	color:white;
+	padding:1em;
+	border: 1px solid white;
+	border-radius:15px;
+}
+
+.padding-x{ 
+    padding:0.4em; width:40%; margin:0 auto;
+	background-color:green;
+	border-radius:15px;
+	font-size: 0.8em; border: 1px solid white;
+}
+
+.green{background: #10e649; padding:1em;} /* green */
+.red{  background:red; padding:1em;}
 
 #myFormZ{
 	margin:4%;

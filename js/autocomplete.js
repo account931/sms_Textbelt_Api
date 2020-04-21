@@ -7,8 +7,10 @@
     $(function() {
 		//array of objects
          var availablePhoneTags = [
-		                    {label: "+3809766", value : "D"},
+		                    {label: "+3809766", value : "Dm"},
 							{label: "+3809785", value : "Sh"},
+							{label: "+453112",  value : "Cph"},
+							{label: "+44791755",  value : "UK"},
 
 							  
         ];
