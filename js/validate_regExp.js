@@ -1,6 +1,7 @@
 $(document).ready(function(){ 
 	
-    //Rex Exp validation for city input
+//Uses RegExp for cell number field while user is typing the number. Used 2 dynamically selected RegExp. 
+//Addintionally, cell number RegExp is done in js/sms_core.js on form submitting {$("#formX").submit(function(e){}
 	
 	//RegExp for Front-end checking the city input===================================
     //var RegExp_Phone = /^[a-zA-Z\-\s,]+$/;//->{engLetters, - ,blankSpace, comma} //may contain only English chars;   //  /^[a-zA-Z0-9_-]{1,16}\.(gif|jpg|mp3)$/;   //only english letter or ints,(-_) name length (1-16), ends in(.(gif|jpg|mp3)   //was  /^[a-zA-Z]{1,16}$/;

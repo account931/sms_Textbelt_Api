@@ -2,19 +2,53 @@ $(document).ready(function(){
 	
     var limitLatin = 120; //limit for chars in sms
 	var limitCyrill = 70;
+	var RegExp_Phone = /^[+][\d]{8,9}[0-9]+$/; //phone number regExp for world wide
 	
 	runAjaxToGetRemainingQuota();
 	
 	
 	
- 
-//on key down count and html() number of printed chars
+	
+//Check before php form submitting if fields()phone number/sms text are OK, if not OK - stop submitting
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     ** 
 
-    $('#smsText').keydown(function(){  //$('#smsText').bind('input', function(){ //keydown
-		var limit = limitLatin; //120;
+    $("#formX").submit(function(e){
+		//if sms text is empty
+		if( $('#smsText').val() == ""){
+            swal("Stop!", "No sms text to send", "warning");
+            e.preventDefault(e); //stop submitting
+		}
+		
+		//if cell number is incorrect, uses RegExp. Additionally RegExp checking is used on cell number keypress (js/validate_regExp.js)
+		if( !$("#cellID").val().match(RegExp_Phone)){
+            swal("Stop!", "Phone number incorrect", "warning");
+            e.preventDefault(e); //stop submitting
+		}
+    });
+
+//
+// **                                                                                  **
+// **************************************************************************************
+// **************************************************************************************
+
+
+
+ 
+//on key down count and html() number of printed chars
+//this functionality is dublicated in {$('#smsText').keyup(function(){ }} otherwise {if(ifCyrillic())} here will fire on seconf russian letter only
+//but we need this Dublicate in {$('#smsTextR').keydown(} as it keeps counting if u hold 1 letter and type it non-stop
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     ** 
+
+    $('#smsTextR').keydown(function(){  //$('#smsText').bind('input', function(){ //keydown
+	    if(ifCyrillic()){
+			var limit = limitCyrill; //70;
+		} else {
+		    var limit = limitLatin; //120;
+		}
 		
 		//display how many chars left
         $('#leftSmsCharsLimit').html("left letters:" + (limit - this.value.length));
@@ -36,7 +70,18 @@ $(document).ready(function(){
 //                                                                                     ** 
 
     $('#smsText').keyup(function(){  //$('#smsText').bind('input', function(){ //keydown
-		var limit = limitLatin; //120;
+	    //Dublicate functionality of {$('#smsTextR').keydown(function(){}} as it will fire on seconf russian letter only. And here it fires at once
+		if(ifCyrillic()){
+			var limit = limitCyrill; //70;
+		} else {
+		    var limit = limitLatin; //120;
+		}
+		
+		//display how many chars left
+        $('#leftSmsCharsLimit').html("left letters:" + (limit - this.value.length));
+		//END Dublicate
+		
+		//var limit = limitLatin; //120;
 		
 		
 		//prohibit typing more than var limut (i.e 120)
@@ -125,29 +170,29 @@ $(document).ready(function(){
 
     $('#checSmsDeliveryStatus').click(function() { 
 	    var smsID = $("#checSmsDeliveryStatus").attr("data-sms"); //gets data-attr of clicked button "Check sms status"
-	    alert(smsID);
+	    //alert(smsID);
 		
 		$.ajax({
-            url: 'http://textbelt.com/status/' + smsID, //'https://textbelt.com/status/'
-            type: 'GET',
+		url: 'Classes/ajax/getSmsDeliveryStatus.php', // can't connect directly to {'https://textbelt.com/status/' + smsID } because of CORS{ajax-request-being-block-because-cross-origin}
+            type: 'POST',
 			dataType: 'JSON', // without this it returned string(that can be alerted), now it returns object
 			//passing the city
             data: { 
-			    //serverCity:window.cityX
+			    serverSmsID: smsID //passing ID of sent sms
 			},
             success: function(data) {
                 // do something;
-			    //alert(data.quotaRemaining);
+			    //alert(data.status);
 				if (data.status == 'DELIVERED'){
 					$('#deliveyStatus').css('background-color','#10e649'); //green
 					$('#deliveyStatus').stop().fadeOut(900,function() { $('#deliveyStatus').html('Sms is ' + data.status)}).fadeIn(900);
 				} else {
 					$('#deliveyStatus').css('background-color','red');
-					$('#deliveyStatus').stop().fadeOut(900,function() { $('#deliveyStatus').html('Sms is ' + data.status)}).fadeIn(900);
+					$('#deliveyStatus').stop().fadeOut(900,function() { $('#deliveyStatus').html('Sms status is ' + data.status)}).fadeIn(900);
 				}
             },  //end success
 			error: function (error) {
-				alert("failed");
+				alert("failed => (Reason: CORS request failed)");
 				alert(JSON.stringify(error, null, 4));
             }	
         });
@@ -171,25 +216,38 @@ $(document).ready(function(){
     $('#clear').click(function() { 
 	    $('#cellID').val('');
 		$('#smsText').val('');
+		$('#leftSmsCharsLimit').html("left letters: " + limitLatin);
 	 });
 	 
 	 
-	 
+
+//Paste text from clipboard	 
 // **************************************************************************************
 // **************************************************************************************
 //                                                                                     ** 
 
     $('#smsText').on('paste', function (e) { 
-	    e.preventDefault(); //must-have to work without errors
+	    
 		var pastedData = e.originalEvent.clipboardData.getData('text'); //gets the paste content
 		//alert(pastedData );
+		e.preventDefault(); //must-have to work without errors
 		
-	    var resultTruncate = cropTextProcessor( $('#smsText'), pastedData, limitLatin);
+		//if current sms text in textarea or clipboard text contains russian
+		if(ifCyrillic() || pastedData.match(/[а-яА-ЯЁё]/)){ //
+			var limit = limitCyrill; //70;
+		} else {
+		    var limit = limitLatin; //120;
+		}
+		
+		//
+		
+	    var resultTruncate = cropTextProcessor( $('#smsText'), pastedData, limit);
 	    $('#smsText').val(resultTruncate);
 		
-		if($('#smsText').val().length >/*=*/ limitLatin ){  //8=Backspace; 46=Delete
-		alert("kkk " + $('#smsText').val().length);
-			$('#smsText').val( $('#smsText').val().substring(0, limitLatin)); 
+		//should not fire ever???
+		if($('#smsText').val().length >/*=*/ limit ){  //8=Backspace; 46=Delete
+		    alert("kkk " + $('#smsText').val().length);
+			$('#smsText').val( $('#smsText').val().substring(0, limit)); 
 		}  
 		
 	});
@@ -208,9 +266,11 @@ $(document).ready(function(){
         var truncated = selector.val(); //gets the input of sms textarea(if any)
 		truncated+= pastedText; //concatenate the input of sms textarea(if any) + paste content
 		//console.log(truncated);
-
+		
+    //if sms text is longer than 160 or 70 chars
     if (truncated.length >= maxLength) {
         truncated = truncated.substr(0, maxLength); // + '!';
+		//$('#leftSmsCharsLimit').html("left letters: 0");
     }
 	console.log(truncated);
     return truncated;
@@ -223,7 +283,20 @@ $(document).ready(function(){
   
   
   
-  
+ 
+//function to check if sms text contain Cyrillic or pure Latin font
+// **************************************************************************************
+// **************************************************************************************
+//                                                                                     ** 
+	function ifCyrillic() { 
+       var ruText = /[а-яА-ЯЁё]/;	
+	   if( $('#smsText').val().match(ruText)){  alert('ru');
+	       return true;
+	   } else {
+		   return false;
+	   
+        }
+	}
   
   
   

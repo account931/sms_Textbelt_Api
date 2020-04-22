@@ -38,6 +38,7 @@ class SendSms
 		
 		      //echo $messageAnswer;
 		      if($messageAnswer['success']){
+				  $_POST = array(); //clear Post
 				  $status = '<p class="sms-success">Sms was sent successfully.</p>';
 				  $status = $status . 
 				      '<button id="checSmsDeliveryStatus" class="btn check-sms-delivery" data-sms="'. $messageAnswer['textId'] .'">Check sms status.</button>' . //button to check send delivery of sent sms

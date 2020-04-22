@@ -31,6 +31,9 @@
 	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!-- City Input autocomplete JS UI, autocomplete won't work without it -->
 	  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!-- City Input autocomplete CSS UI, autocomplete won't work without it -->
 	  
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> <!-- Sweet Alert JS -->
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!--  Sweet Alert CSS -->
+	  
 	  <meta name="viewport" content="width=device-width" />
 
      </head>
@@ -64,7 +67,7 @@
 		      <div class="col-sm-8 col-xs-12 myShadow shrink colorAnimate change-head-style" style="background-color:lavender;">  <!--.change-head-style sets bg image, .colorAnimate sets animation-->
 			     
 		           <!--------Form Start------>	
-                   <form action="" id="" method="post">
+                   <form action="" id="formX" method="post">
                       <div class="form-group">
                           <label for="citytext" id="cityLable">Send sms via api <span class="glyphicon glyphicon-transfer"></span></label>
 						  <!-- RegExp Span -->
@@ -78,7 +81,7 @@
 						  
 						  <div class="form-group">
                               <label for="usr">Sms text:</label>
-                              <textarea rows="4" class="form-control" cols="50" name="sms_text" id="smsText" placeholder="your sms here..."><?php if( isset($_POST['sms_text']) && !isset($messageAnswer['success'])){echo $_POST['sms_text']; }?></textarea>
+                              <textarea rows="4" class="form-control" cols="50" name="sms_text" id="smsText" placeholder="your sms here..."><?php if( isset($_POST['sms_text']) && !isset($messageAnswer['success'])){echo $_POST['sms_text']; } else {echo "";}?></textarea>
                           </div>
                           
 						  
