@@ -290,7 +290,7 @@ $(document).ready(function(){
 //                                                                                     ** 
 	function ifCyrillic() { 
        var ruText = /[а-яА-ЯЁё]/;	
-	   if( $('#smsText').val().match(ruText)){  alert('ru');
+	   if( $('#smsText').val().match(ruText)){  //alert('ru');
 	       return true;
 	   } else {
 		   return false;

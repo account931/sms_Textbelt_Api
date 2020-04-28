@@ -7,7 +7,7 @@ require_once '../CheckSmsDeliveryStat.php';
 
 
 if(isset( $_POST['serverSmsID'] )) {
-     $check = new MySmsTetxBelt\CheckSmsDeliveryStat();
+     $check = new MySmsTetxBelt\Classes\CheckSmsDeliveryStat();
 	 $result = $check->checkSmsStatus($_POST['serverSmsID']);
      $arrayResult = array('status' => $result );
 	 echo json_encode($arrayResult);

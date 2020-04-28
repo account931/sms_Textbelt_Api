@@ -3,7 +3,7 @@
 //can't connect directly to {'https://textbelt.com/status/' + smsID } because of CORS {ajax-request-being-block-because-cross-origin}
 
 
-namespace MySmsTetxBelt;
+namespace MySmsTetxBelt\Classes;
 
 
 

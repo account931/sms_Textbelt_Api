@@ -1,6 +1,6 @@
 <?php
 
-namespace MySmsTetxBelt;
+namespace MySmsTetxBelt\Classes;
 
 
 

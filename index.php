@@ -120,12 +120,26 @@
 			//autoload
 			include 'Classes/autoload.php';//uses autoload instead of manual includin each class-> Error if it is included in 2 files=only1 is accepted 
 			include 'Credentials/credentials.php';
+			
+			/*
+			// Version {Classes/autoload_vers_2.php}-------------------------
+			//Fully working, in order to use:
+			//1. Call necessary class (in index.php) like this {use MySmsTetxBelt\Check_Is_Curl_Installed;}, NOT {use MySmsTetxBelt\Classes\Check_Is_Curl_Installed;}
+			//2. In class itself (in folder "Classes/") use namespace {namespace MySmsTetxBelt;} NOT  {namespace MySmsTetxBelt\Classes;}
+			// Подключаем класс автозагружчика и создаем его экземпляр
+            require_once 'Classes/autoload_vers_2.php';
+            $autoloader = new NamespaceAutoloader();
+
+            // Регистрируем пространство имен и запускаем автозагрузку
+            $autoloader->addNamespace('MySmsTetxBelt', 'Classes'); //($namespace, real rootDir)
+            $autoloader->register();
+			//END Version {Classes/autoload_vers_2.php}-----------------------
+		    */
 				 
-		
 				 
-				 
-			//Check if cUrl is installed	 
-		    $checkCurl = new MySmsTetxBelt\Check_Is_Curl_Installed();
+			//Check if cUrl is installed
+            use	MySmsTetxBelt\Classes\Check_Is_Curl_Installed;		
+		    $checkCurl = new Check_Is_Curl_Installed(); //new MySmsTetxBelt\Classes\Check_Is_Curl_Installed();
 		    $checkCurl->_is_curl_installed();
 			
 
@@ -135,7 +149,7 @@
 					 echo "Phone is " . $_POST['phone_number'];
 					 echo "<br>Sms is " . $_POST['sms_text'];
 					 
-					 $sms = new MySmsTetxBelt\SendSms();
+					 $sms = new MySmsTetxBelt\Classes\SendSms();
 	                 $text = $sms->sendingSms($_POST['phone_number'], $_POST['sms_text']);
 				 } else {
 					 $text = "<h2>Waiting for your sms</h2>";

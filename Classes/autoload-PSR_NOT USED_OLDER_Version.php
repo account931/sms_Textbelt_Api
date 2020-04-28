@@ -1,4 +1,5 @@
 <?php
+//some auloader version found in old projects. Not tested, but in fact seems quite working
 namespace Example;
 
 /**
