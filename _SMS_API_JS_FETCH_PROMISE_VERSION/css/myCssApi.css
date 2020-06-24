@@ -1,0 +1,451 @@
+#smsResult{margin-top:20px;}
+
+
+/*text not to overlap the div => */
+.word-wrap{
+	word-wrap: break-word;
+}
+
+body{font-color:black;}
+
+/* flash message if Sms is sent */
+.sms-success{
+	padding:2em;
+	background-color:green;
+	border-radius:15px;
+	border: 1px solid white;
+}
+
+/* flash message if Sms sending failed */
+.sms-fail{
+	padding:2em;
+	background-color:red;
+	border-radius:15px;
+	border: 1px solid white;
+}
+
+/* show amount of chars left (on typing) */
+.left-chars{margin-top:1em; font-size:0.8em;}
+
+
+#checkQuota img{
+	width:8em;
+}
+
+/* button to click in order to acquire status */
+.check-sms-delivery{color:black;}
+
+/* div that shows ajax result for Delivery */
+#deliveyStatus{
+	color:white;
+	padding:1em;
+	border: 1px solid white;
+	border-radius:15px;
+	margin-top:0.8em;
+}
+
+.padding-x{ 
+    padding:0.4em; width:40%; margin:0 auto;
+	background-color:green;
+	border-radius:15px;
+	font-size: 0.8em; border: 1px solid white;
+}
+
+.green{background: #10e649; padding:1em;} /* green */
+.red{  background:red; padding:1em;}
+
+#myFormZ{
+	margin:4%;
+  }
+
+/* Span for Reg exp errors */
+.error_req, .sp {color:red;}
+  
+  
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+ 
+    #weatherResult h4{	 
+	    font-size: 1em; 	 
+    }
+	
+	
+ 
+    #wLogo{
+	    width:40%;	
+    }
+	
+	#wLogo2{
+	    display:none;	
+    }
+	
+	 /* weather icon in mobile 7 days, visible in mobile only */
+    .weather_icon_mob{
+		display:block;
+		 width:97%;	      
+     }
+  
+   /* weather icon in mobile 7 days, hidden in mobile */
+    .weather_icon{
+		/* width:40px%; */
+		display: none;
+        		
+     }
+	 
+	 /* Weather icon in  for function constructAjaxResponseColor Ver2 */	
+    .weather_icon2{
+	      width: 170%;
+     }
+  
+}
+/* ------------------------------------- END Mobile */
+
+
+
+
+
+ /* weather icon in 7 days, hidden in mobile */
+ .weather_icon{
+	      width: 27%;
+     }
+	
+/* Color var 2 for function constructAjaxResponseColor */	
+.weather_icon2{
+	      width: 37%;
+     }
+	
+/* weather icon in 7 days, hidden in web */	
+  .weather_icon_mob{
+	      display:none;
+     }
+
+
+.lavender-color {
+  background-color:lavender;
+}
+
+
+
+
+/* Weather header logo */
+#wLogo, #wLogo2{
+	 width:10%;
+	 position:relative;
+	 top:; 
+	 left:;
+}
+
+.myShadow{
+    box-shadow: 10px 10px 5px grey;
+}
+ 
+.textShadow{ 
+    color: white; 
+	/* text-shadow: black 0.2em 0.1em 0.2em; */
+	text-shadow:
+    1px  1px 2px black,
+    1px -1px 2px black,
+   -1px  1px 2px black,
+   -1px -1px 2px black;	 
+}  
+  
+  
+  
+  
+  
+  /* Padding in weather 7 days */
+  .myStyle {
+	  padding-top:1em;
+	  padding-bottom:1em;
+	  border:2px solid white;
+	  border-radius:12px;
+	 
+  }
+  
+  .myStyle:hover{
+	   border:1px solid black;
+  }
+  
+
+  
+  
+  /* Animation */
+  
+   /* Set the object smaller on hover*/
+  .shrink:hover {
+     -webkit-transform: scale(1);
+     -ms-transform: scale(1);
+     transform: scale(1);
+  }
+  
+  .shrink-large:hover {
+     -webkit-transform: scale(2.2);
+     -ms-transform: scale(2.2);
+     transform: scale(2.2);
+  }
+  
+   /* Set the header object radius on hover*/
+  .colorAnimate_PREV:hover {
+	  border-radius: 53px;
+      background:red;
+  }
+  
+  
+  /* descripe the animation behaviour */
+   .shrink-large, .colorAnimate {
+    -webkit-transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
+     transition: all 1.5s ease;
+  }
+
+  
+    
+  /* descripe the animation behaviour */
+  .shrink{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+     transition: all 0.5s ease;
+  }
+
+ 
+  
+  /* END Animation */
+  
+  
+  
+  
+  
+  /*  Language Selection at top right */
+.language {
+	position: absolute;
+	right: 34%;
+	top:0.5em;
+	cursor:pointer;
+	font-size:0.3em;
+	color:white;
+}
+
+.lang {color:white;}
+
+.lang:hover {
+	color: black;
+}
+
+
+  /*  Theme Selection at top right */
+.theme{
+	position: absolute;
+	left: 0.5%;
+	top:0.2em;
+	cursor:pointer;
+	font-size:0.3em;
+}
+
+.them:hover {
+	color: white;
+}
+
+  
+  /* CSS for function constructAjaxResponseColor, colorful version 2 */
+ .color{
+	border-radius:10px; 
+	height:43px;
+  }
+  
+ .color-red{
+	background:red;
+  }
+  
+  .color-yellow{
+	background:yellow;
+  }
+  
+   .color-lawn{
+	background:lime;
+  }
+  
+  
+  /*button to change bg color */
+  #changeStyle{
+	  color:black;
+  }
+  
+  
+  /* Class that sets background-image */
+.change-head-style{
+	color:white;
+	background-color:lavender;padding:10px;
+	background-image: url('../images/bg-image1.jpg');  
+	/*text-shadow: 1px 1px 2px black, 0 0 1em red;*/ /* Shadow params */
+	/* background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%); */
+}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+/* --------- OLD ---------------*/
+
+/*  ----------------Mobile */
+
+@media screen and (max-width: 460px) {   
+ 
+    .header_p {
+	    font-size: 44px;	
+	}
+	
+	.bt-mobile-mine {
+		margin-bottom: 7px;
+		
+	}
+	
+	textarea { font-size: px; }
+
+}
+/* --------------END  Mobile */
+
+
+
+
+
+.footer {
+  /* position: absolute; */
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef; /* #2ba6cb; */
+  text-align: center;
+  
+}
+
+
+
+
+
+/* Hide div 2, div 3 by default */
+#randIntegerDiv, #randIntegListDiv {
+	display: none;
+}
+
+.span-small {
+	color:red;
+	font-size: 0.7em;
+}
+
+
+.red {
+	color:red;
+}
+
+.badgeMine {
+	font-size: 3em;
+}
+
+/* Results div, more more flexible, without it the long result text overlaps the div, and overlaps footer as well */
+#resultFinal  {
+	display:inline-block;
+	width:88%;
+	
+}
+
+
+
+.gradientR {
+background: rgba(177,219,237,1);
+background: -moz-linear-gradient(left, rgba(177,219,237,1) 0%, rgba(37,184,228,1) 50%, rgba(186,223,238,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(177,219,237,1)), color-stop(50%, rgba(37,184,228,1)), color-stop(100%, rgba(186,223,238,1)));
+background: -webkit-linear-gradient(left, rgba(177,219,237,1) 0%, rgba(37,184,228,1) 50%, rgba(186,223,238,1) 100%);
+background: -o-linear-gradient(left, rgba(177,219,237,1) 0%, rgba(37,184,228,1) 50%, rgba(186,223,238,1) 100%);
+background: -ms-linear-gradient(left, rgba(177,219,237,1) 0%, rgba(37,184,228,1) 50%, rgba(186,223,238,1) 100%);
+background: linear-gradient(to right, rgba(177,219,237,1) 0%, rgba(37,184,228,1) 50%, rgba(186,223,238,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b1dbed', endColorstr='#badfee', GradientType=1 );
+
+}
+
+ /*  Language Selection at top right */
+.language {
+	position: absolute;
+	right: 7em;
+	top:0.2em;
+	cursor:pointer;
+}
+
+.language :hover {
+	color:white;
+}
+
+
+/* Ads CSS -------------------------------------*/
+.ads {
+	position: absolute;
+	top:0.1em;
+	left: 0.1em;
+	width:20%;
+	
+}
+
+.ads img {
+	width:95%;
+	border-radius:12px;
+}
+
+@media screen and (max-width: 460px) {   
+  .ads img {
+	 border-radius:4px;
+  }
+	 
+}
+/* --------------END  Mobile */
+
+/* END Ads CSS --------------------------------- */
+
+
+
+
+
+
+
+
+
+
